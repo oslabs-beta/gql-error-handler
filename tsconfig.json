@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "strict": true,
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "package/**/*"
+  ]
+}
