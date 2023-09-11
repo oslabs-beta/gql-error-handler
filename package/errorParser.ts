@@ -13,7 +13,10 @@ const string2 =
 // error "INTERNAL_SERVER_ERROR"
 const string3 = 'WHERE parameter "characterId" has invalid "undefined" value';
 
-function errorParser(error: string): string {
+const string4 =
+  'Cannot query field "sam" on type "Character". Did you mean "name"?"';
+
+function classificationParser(error: string): string {
   const strArr = error.split(' ');
 
   const notFields = [];
@@ -27,12 +30,13 @@ function errorParser(error: string): string {
   return notFields.join(' ');
 }
 
-// console.log(errorParser(string1));
-// console.log(errorParser(string2));
-// console.log(errorParser(string3));
+function errorParser(error: string): string[] {
+  return errLib[classificationParser(error)](error);
+}
 
 //invoke methods corresponding to incoming error message
 //methods take in error message as argument
-console.log(errLib[errorParser(string1)](string1));
-console.log(errLib[errorParser(string2)](string2));
-console.log(errLib[errorParser(string3)](string3));
+// console.log(errLib[errorParser(string1)](string1)); //-> [Character, woobae]
+// console.log(errLib[errorParser(string2)](string2));
+// console.log(errLib[errorParser(string3)](string3));
+module.exports = errorParser;

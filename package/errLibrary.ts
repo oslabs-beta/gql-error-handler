@@ -20,7 +20,7 @@ function fieldDoesntExist(error: string): string[] {
     }
   }
 
-  return fields;
+  return [fields[1], fields[0]];
 }
 
 const errLibrary = {
