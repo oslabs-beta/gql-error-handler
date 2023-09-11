@@ -18,6 +18,7 @@ const testQuery = `
         id
         description
         test
+        wobble
       }
       text {
         content
@@ -26,7 +27,8 @@ const testQuery = `
   }
 `;
 
-const testFields = ['test', 'text'];
+const testFields = { Link: ['test', 'wobble'], Feed: ['text'] };
+
 
 //helper function to remove the field{} in the query
 function remove(field: string, query: string): string {
