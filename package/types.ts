@@ -45,3 +45,7 @@ export interface QueryAST extends ASTNode {
   kind: 'Document';
   definitions: OperationDefinitionNode[];
 }
+
+export interface ErrorMessage {
+  [key: string]: string[];
+}
