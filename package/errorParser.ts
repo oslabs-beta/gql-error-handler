@@ -1,17 +1,19 @@
 // errorParser.ts
 // identify type of error, error manipulation (classification) {input will be error message, output will be array of unvalidated fields}
 
-// error for fields that don't exist in schema ("code": "GRAPHQL_VALIDATION_FAILED")
-const string1 = "Cannot query field \"woobae\" on type \"Character\"."
+const errLib = require('./errLibrary');
 
-// error 
-const string2 = "Field \"post\" argument \"description\" of type \"String!\" is required, but it was not provided."
+// error for fields that don't exist in schema ("code": "GRAPHQL_VALIDATION_FAILED")
+const string1 = 'Cannot query field "woobae" on type "Character".';
+
+// error
+const string2 =
+  'Field "post" argument "description" of type "String!" is required, but it was not provided.';
 
 // error "INTERNAL_SERVER_ERROR"
-const string3 = "WHERE parameter \"characterId\" has invalid \"undefined\" value"
+const string3 = 'WHERE parameter "characterId" has invalid "undefined" value';
 
-function errorParser(error) {
-
+function errorParser(error: string): string {
   const strArr = error.split(' ');
 
   const notFields = [];
@@ -25,8 +27,12 @@ function errorParser(error) {
   return notFields.join(' ');
 }
 
-console.log(errorParser(string1));
-console.log(errorParser(string2));
-console.log(errorParser(string3));
+// console.log(errorParser(string1));
+// console.log(errorParser(string2));
+// console.log(errorParser(string3));
 
-//call function at errLibrary[errorParser(string2)]()
+//invoke methods corresponding to incoming error message
+//methods take in error message as argument
+console.log(errLib[errorParser(string1)](string1));
+console.log(errLib[errorParser(string2)](string2));
+console.log(errLib[errorParser(string3)](string3));
