@@ -5,7 +5,6 @@ function queryFormatter(query: string) {
 
   return function (error: ErrorMessage) {
     let resultQuery = query;
-    console.log(resultQuery);
     
     for (let keys in error) {
         console.log(keys);
@@ -13,8 +12,6 @@ function queryFormatter(query: string) {
         //Link, find key in query, and remove the key values
       //const testError = { Link: ['test', 'wobble'], Feed: ['text'] };
       for(let i = 0; i < error[keys].length; i++){
-        console.log(resultQuery);
-        console.log(error[keys][i])
         resultQuery = remove(keys, error[keys][i], resultQuery);
       }
     }
@@ -27,22 +24,33 @@ function queryFormatter(query: string) {
 
 function remove(type: string, field: string, query: string) {
   let substring = '';
-  console.log(query);
   //declare a pattern and find if the type pattern exist in the query
-  const regexPattern = new RegExp(`${type}(\\s|\\n)*\\{[^{}]*\\}`);
-  const regexPattern1 = new RegExp(`${type}\\s*`);
+  const regexPattern = new RegExp(`(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`);
+  // const regexPattern = new RegExp(
+  //   `(\\s|\\n)*${field}(\\s|\\n)*\\{[^{}]*\\}`,
+  //   'g'
+  // );
+
   console.log(regexPattern);
   const match = query.match(regexPattern);
   console.log(match);
   if (match) {
     //get the content inside {}
     const extractedField = match[0];
-    console.log(extractedField);
     let newQuery = '';
+    console.log(extractedField);
+    const regexExtract = new RegExp(`\\{[(\\s|\\n)*${field}[ ]*\\}`);
+    const regexExtract1 = new RegExp(`\\{\\s*${field}\\s*\\}`);
+    console.log(regexExtract1.test(extractedField))
+    if(regexExtract.test(extractedField)){
+      newQuery = query.replace(extractedField, '');
+      console.log(newQuery);
+      return newQuery;
+    }
+    
     if (extractedField.includes(field)) {
       //regex express to match the word with or without curly braces immediately following it
       const regex1 = new RegExp(`${field}\\s*\\{`);
-      console.log(regex1.test(extractedField));
       //1st case, there's no curly braces pair after the field
       if (!regex1.test(extractedField)) {
         const regex2 = new RegExp(`${field}\\s*`);
@@ -84,8 +92,8 @@ const testQuery = `
 
 const invalidQuery = queryFormatter(testQuery);
 
-// const testError = { links: ['test', 'wobble'], feed: ['text'] };
-const testError = { feed: ['text'] };
+const testError = { links: ['test', 'wobble'], feed: ['text'] };
+// const testError = { text: ['content'] };
 
 const validQuery = invalidQuery(testError);
 console.log(validQuery);
