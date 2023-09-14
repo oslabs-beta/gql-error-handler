@@ -28,7 +28,7 @@ const errLibrary = {
   // fieldDoesntExist in this case returns a 2-item array
   // first item is the name of the field that doesn't exist
   // second item is the name of the type in the schema
-
+  'Cannot query field on type Did you mean': fieldDoesntExist,
   'Field argument of type is required, but it was not provided.':
     fieldDoesntExist,
 

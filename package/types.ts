@@ -3,6 +3,10 @@ export type ErrorMessage = {
   [key: string]: string[];
 };
 
+export type TypeFieldsCache = {
+  [key: string]: string;
+};
+
 // WHAT? WHAT IS HAPPENING IN HERE!!!!
 // I SEE CODE HAS SPONTANEOUSLY MANIFESTED ITSELF! HOW????????????
 // TIFFANY, STEP AWAY FROM THE KEYBOARD. I REPEAT, STEP AWAY FROM THE KEYBOARD

@@ -31,7 +31,8 @@ function classificationParser(error: string): string {
 }
 
 function errorParser(error: string): string[] {
-  return errLib[classificationParser(error)](error);
+  // console.log(errLib[classificationParser(error)]);
+  return errLib[classificationParser(error)];
 }
 
 //invoke methods corresponding to incoming error message
