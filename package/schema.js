@@ -43,6 +43,3 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
-
-/* { query: { 'character': ['name', 'test', { 'films': ['title'] } ], 'films': ['title'] },
-  mutation: { 'createCharacter': ['name', 'height', 'gender' ] } } */

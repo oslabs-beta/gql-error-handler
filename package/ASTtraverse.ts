@@ -88,60 +88,50 @@ const sampleQuery2 = `query {
   }
   `;
 
-function queryMapper(query: string) {
-  const ast: DocumentNode = parse(sampleQuery2);
+// function queryMapper(query: string) {
+//   const ast: DocumentNode = parse(sampleQuery2);
 
-  const queryMap: ErrorMessage = {};
+//   const queryMap: ErrorMessage = {};
 
-  let operationType: string;
+//   let operationType: string;
 
-  const visitor = {
-    OperationDefinition: {
-      enter(node: OperationDefinitionNode) {
-        console.log('node', node);
-        operationType = node.operation;
-        queryMap[operationType] = [];
-        const fieldVisitor = {
-          Field(node: FieldNode) {
-            queryMap[operationType].push(node.name.value);
-            console.log('Field name:', node.name.value);
-          },
-        };
-        visit(node, fieldVisitor);
-      },
-    },
-  };
-  visit(ast, visitor);
+//   const visitor = {
+//     OperationDefinition: {
+//       enter(node: OperationDefinitionNode) {
+//         console.log('node', node);
+//         operationType = node.operation;
+//         queryMap[operationType] = [];
+//         const fieldVisitor = {
+//           Field(node: FieldNode) {
+//             queryMap[operationType].push(node.name.value);
+//             console.log('Field name:', node.name.value);
+//           },
+//         };
+//         visit(node, fieldVisitor);
+//       },
+//     },
+//   };
+//   visit(ast, visitor);
 
-  return queryMap;
-}
+//   return queryMap;
+// }
 
-console.log(queryMapper(sampleQuery2));
-const queryObj = queryMapper(sampleQuery2);
-
-// 1, compare the operationDefinition with key of the objects
-// 2, Query object key is characters, and films,
-// 3, characters === array[0], films === array[3]
-// 4, fields are between array[1]-array[2], array[4]-array[array.leng-1]
-// 5, if we find field error, continue, if we find an type error, stop looking into it's fields(value object)
-// testError = { characters: ['test', 'wobble'], films: ['name'] };
-
-//take schema, ast and get an array
-//2nd function pass the array, and schema, and do the comparison
+// console.log(queryMapper(sampleQuery2));
+// const queryObj = queryMapper(sampleQuery2);
 
 //error function as callback function
-function errorConstructor(
-  type: string,
-  field: string,
-  testError: ErrorMessage
-) {
-  //check if the type already exist in the testError object
-  if (testError[type]) {
-    testError[type].push(field);
-  }
-  testError[type] = [field];
-  return testError;
-}
+// function errorConstructor(
+//   type: string,
+//   field: string,
+//   testError: ErrorMessage
+// ) {
+//   //check if the type already exist in the testError object
+//   if (testError[type]) {
+//     testError[type].push(field);
+//   }
+//   testError[type] = [field];
+//   return testError;
+// }
 
 /*Sample Schema: 
 cacheSchema: {
@@ -202,25 +192,29 @@ cacheSchema: {
 function compare(schema: SchemaObj, queryObj: ErrorMessage) {
   const errorObj: ErrorMessage = {};
 
-  if (queryObj.query) {
-    for (const key in queryObj.query) {
-      if (schema.query[key]) {
-        for (let i = 0; i < queryObj.query[key].length; i++) {
-          if (typeof queryObj.query[key][i] !== 'object') {
-            if (!schema.query[key][queryObj.query[key][i]]) {
+  function helper(object: any, type: string) {
+    for (const key in object) {
+      if (schema[type][key]) {
+        for (let i = 0; i < object[key].length; i++) {
+          if (typeof object[key][i] !== 'object') {
+            if (!schema[type][key][object[key][i]]) {
               if (errorObj[key]) {
-                errorObj[key].push(queryObj.query[key][i]);
+                errorObj[key].push(object[key][i]);
               } else {
-                errorObj[key] = [queryObj.query[key][i]];
+                errorObj[key] = [object[key][i]];
               }
             }
           } else {
             // this is the case if an object exists in the array
+            helper(object[key][i], type);
           }
         }
       }
     }
   }
+
+  helper(queryObj.query, 'query');
+  helper(queryObj.mutation, 'mutation');
 
   return errorObj;
 };
@@ -232,31 +226,6 @@ function compare(schema: SchemaObj, queryObj: ErrorMessage) {
 //   characters: ['height'],
 //   films: ['The Phantom Menace', 'A New Hope'],
 // }; 
-
-
-// const compareHelper(schemaType:string, schemaValue:string[], queryType:string, querySubArray:string[]){
-
-// }
-// const schemaType(){
-
-// }
-// const queryType(){
-
-// }
-// const schemaField(){
-
-// }
-// const queryField(){
-
-// }
-
-
-
-  //sampleError = { character: ['test'] };
-
-
-
-
 
 // Previous compare() code:
 
