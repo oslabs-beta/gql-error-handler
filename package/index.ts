@@ -4,27 +4,71 @@ const errorHandlers = {};
 
 // client will employ a single function specified by the package (higher order function) and within the package all of the lower level functionality will be executed through callbacks, abstracting away all of the functionality and complexity from the developer
 
-// queryFormatter.ts
-// one func, query manipulation (closure) {input is query, output is function(formatter{output is sanitized query})}
-// intercept original query
-// cache original query (or simply assign to const if we pass query on to query parser within scope of current function)
-// send it to query parser
-// returned function {input is all fields returned by func LINE 16 (array of strings), output refactored query} would refactor the query after receiving error object (as argument)
-// if no error object, should just return the query (do nothing)
+const queryAdjusterPlugin = {
+  requestDidStart(requestContext) {
+    const schema = requestContext.schema;
+    const cacheSchema = {
+      query: {},
+      mutation: {},
+    };
+    const customTypes = {};
+    const typeFieldsCache = {};
 
-// errorParser.ts
-// identify type of error, error manipulation (classification) {input will be error message, output will be array of unvalidated fields}
-// errLibrary.ts
-// object on file as library for all error classifications (key will be regular expression of different error message strings, value will be the string manipulation method needed to parse the error message string)
-// take error message from error, compare within classification object
-// parse error message with string manip. method to extract faulty field labels
+    const allTypes = Object.values(schema.getTypeMap());
 
-// based on this parse of error message, reformat the original querry in the cache (this is the returned function on LINE 12)
+    allTypes.forEach((type) => {
+      if (type && type.constructor.name === 'GraphQLObjectType') {
+        if (type.name[0] !== '_') {
+          if (type.name !== 'Query' && type.name !== 'Mutation') {
+            customTypes[type.name] = {};
+            const fields = type.getFields();
+            Object.values(fields).forEach((field) => {
+              customTypes[type.name][field.name] = field.type.toString();
+            });
+          } else {
+            const fields = type.getFields();
+            Object.values(fields).forEach((field) => {
+              let fieldType = field.type.toString();
+              if (fieldType[0] === '[') {
+                fieldType = fieldType.slice(1, fieldType.length - 1);
+                // populate typeFieldsCache
+                typeFieldsCache[field.name] = fieldType;
+              }
+              cacheSchema[type.name.toLowerCase()][field.name] =
+                customTypes[fieldType];
+            });
+          }
+        }
+      }
+    });
+    console.log('customTypes:', customTypes);
+    console.log('cacheSchema:', cacheSchema);
+    console.log('typeFieldsCache:', typeFieldsCache);
 
-// send reformulated querry back to the querry parser for validation (expecting that it will execute)
+    const resultQuerryMapper = queryMapper(requestContext.request.query);
+    console.log('resultQuerryMapper:', resultQuerryMapper);
 
-// partialDataRes.ts
-// intercept the data response from the DB and then add the original error message (or some portion of it) to the data object to be finally sent to the client
+    const errorObj = compare(cacheSchema, resultQuerryMapper);
+    // const errorObj = {};
+    console.log('ERROROBJ:', errorObj);
+    console.log('GraphQL Query before:', requestContext.request.query);
+    const queryFunc = queryFormatter(requestContext.request.query);
+    requestContext.request.query = queryFunc(errorObj);
+    console.log('GraphQL Query after:', requestContext.request.query);
+
+    return {
+      async willSendResponse(requestContext) {
+        const { response } = requestContext;
+        if (!response || !response.errors) {
+          const errArray = errObjectParser(errorObj, typeFieldsCache);
+          if (errArray.length > 0) response.errors = errArray;
+          console.log('response.errors:', errArray);
+          // console.log('Final Response without Errors:', response);
+        }
+      },
+    };
+  },
+};
 
 // CHALLENGES, YAAAAYYYYY!!!!!
 // we will not be importing apollo library into our package
