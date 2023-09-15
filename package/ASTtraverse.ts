@@ -87,52 +87,6 @@ const sampleQuery2 = `query {
     }
   }
   `;
-
-// function queryMapper(query: string) {
-//   const ast: DocumentNode = parse(sampleQuery2);
-
-//   const queryMap: ErrorMessage = {};
-
-//   let operationType: string;
-
-//   const visitor = {
-//     OperationDefinition: {
-//       enter(node: OperationDefinitionNode) {
-//         console.log('node', node);
-//         operationType = node.operation;
-//         queryMap[operationType] = [];
-//         const fieldVisitor = {
-//           Field(node: FieldNode) {
-//             queryMap[operationType].push(node.name.value);
-//             console.log('Field name:', node.name.value);
-//           },
-//         };
-//         visit(node, fieldVisitor);
-//       },
-//     },
-//   };
-//   visit(ast, visitor);
-
-//   return queryMap;
-// }
-
-// console.log(queryMapper(sampleQuery2));
-// const queryObj = queryMapper(sampleQuery2);
-
-//error function as callback function
-// function errorConstructor(
-//   type: string,
-//   field: string,
-//   testError: ErrorMessage
-// ) {
-//   //check if the type already exist in the testError object
-//   if (testError[type]) {
-//     testError[type].push(field);
-//   }
-//   testError[type] = [field];
-//   return testError;
-// }
-
 /*Sample Schema: 
 cacheSchema: {
 [1]   query: {
