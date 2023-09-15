@@ -198,10 +198,12 @@ function compare(schema: SchemaObj, queryObj: ErrorMessage) {
         for (let i = 0; i < object[key].length; i++) {
           if (typeof object[key][i] !== 'object') {
             if (!schema[type][key][object[key][i]]) {
-              if (errorObj[key]) {
-                errorObj[key].push(object[key][i]);
-              } else {
-                errorObj[key] = [object[key][i]];
+              if (object[key][i][0] !== '_') {
+                if (errorObj[key]) {
+                  errorObj[key].push(object[key][i]);
+                } else {
+                  errorObj[key] = [object[key][i]];
+                }
               }
             }
           } else {
@@ -217,7 +219,7 @@ function compare(schema: SchemaObj, queryObj: ErrorMessage) {
   helper(queryObj.mutation, 'mutation');
 
   return errorObj;
-};
+}
 
 
 // errorObj (to be returned from compare):

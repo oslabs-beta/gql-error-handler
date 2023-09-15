@@ -16,7 +16,7 @@ function queryFormatter(query: string) {
       }
     }
 
-    if(resultQuery === query) return console.error('Query reformating failed.')
+    // if(resultQuery === query) return console.error('Query reformating failed.')
 
     return resultQuery;
   };
