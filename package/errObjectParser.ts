@@ -1,12 +1,9 @@
 import { GraphQLResponse, ErrorMessage, TypeFieldsCache } from './types';
-const errorParser = require('./errorParser');
 
 // const example = {
 //   characters: ['height'],
 //   films: ['The Phantom Menace', 'A New Hope'],
 // };
-
-// const typeExample = { characters: 'Character', films: 'Film' };
 
 function errObjectParser(
   errorObj: ErrorMessage,

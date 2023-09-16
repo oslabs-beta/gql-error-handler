@@ -18,21 +18,20 @@ function queryMapper(query: string) {
     const fieldArray: any[] = [];
 
     if (node.selectionSet) {
-        // console.log(node.selectionSet.selections[2]);
       node.selectionSet.selections.forEach((selection) => {
         if (selection.kind === 'Field') {
           if (selection.selectionSet) {
-            fieldArray.push({ [selection.name.value]: buildFieldArray(selection)})
+            fieldArray.push({
+              [selection.name.value]: buildFieldArray(selection),
+            });
           } else {
             fieldArray.push(...buildFieldArray(selection));
           }
         }
       });
     }
-    
-    let temp = fieldArray.length > 0
-    ? fieldArray
-    : [node.name.value];
+
+    let temp = fieldArray.length > 0 ? fieldArray : [node.name.value];
     return temp;
   };
 
