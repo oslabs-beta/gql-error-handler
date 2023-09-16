@@ -1,4 +1,3 @@
-
 //give errorArray object key type fields
 export type ErrorMessage = {
   [key: string]: string[];
@@ -29,6 +28,41 @@ export type GraphQLResponse = {
 };
 
 export interface SchemaObj {
-  [key: string] : any;
+  [key: string]: any;
 }
 
+export type RequestContextType = {
+  logger: object;
+  schema: { getTypeMap: () => any };
+  schemaHash: string;
+  request: {
+    query: string;
+  };
+  response: ResponseType;
+  context: object;
+  cache: object;
+  debug: boolean;
+  metrics: object;
+  overallCachePolicy: object;
+  requestIsBatched: boolean;
+};
+
+type ResponseType = {
+  errors: any[];
+};
+
+export type CacheSchemaObject = {
+  [key: string]: {
+    [field: string]: string | object;
+  };
+};
+
+export type CustomTypesObject = {
+  [key: string]: {
+    [field: string]: string;
+  };
+};
+
+export type TypeFieldsCacheObject = {
+  [key: string]: string;
+};
