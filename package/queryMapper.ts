@@ -58,3 +58,4 @@ function queryMapper(query: string) {
 
   return queryMap;
 }
+module.exports = queryMapper;
