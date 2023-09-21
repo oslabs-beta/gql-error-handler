@@ -7,10 +7,9 @@ function queryFormatter(query: string) {
     let resultQuery = query;
 
     for (let keys in error) {
-      console.log(keys);
-
       //Link, find key in query, and remove the key values
       //const testError = { Link: ['test', 'wobble'], Feed: ['text'] };
+      // error = { characters: [ 'woobae' ] }
       for (let i = 0; i < error[keys].length; i++) {
         resultQuery = remove(keys, error[keys][i], resultQuery);
       }
@@ -21,32 +20,74 @@ function queryFormatter(query: string) {
     return resultQuery;
   };
 }
+/*nested query: {
+  characters {
+    name
+    woobae
+    films{
+      title
+    }
+  }
+}
+*/
+//with nested query: /(\s|\n)*woobae\s*{[^{}]*}|(characters\s*{[^{}]*\s*}(\s|\n)*)/
 
+/*not nested query:
+{
+  characters {
+    name
+    woobae
+  }
+}
+*/
+/*const testQuery = `
+  query {
+    feed {
+      links {
+        id
+        description
+        test
+        wobble
+        text {
+          content
+          test2 {
+            field
+          }
+        }
+      }
+    }
+  }
+`; */
+//const testError = { links: ['test', 'wobble'], text: ['test2'] };
+//remove(links, test, *original query*) --doesn't work
+//remove(text, test2, query) --this work
+//not nested query: /(\s|\n)*woobae\s*{[^{}]*}|(characters\s*{[^{}]*\s*}(\s|\n)*)/
 function remove(type: string, field: string, query: string) {
   let substring = '';
   //declare a pattern and find if the type pattern exist in the query
-  const regexPattern = new RegExp(
-    `(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`
-  );
+  //regexPattern to find either 'field{}' or 'type{}'  in the query
+  //type{{}
+  const regex = new RegExp(`${type}\\s*{[^]*?${field}(\\s|\\n)*`);
+  // const regexPattern = new RegExp(
+  //    `(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`
+  // );
   // const regexPattern = new RegExp(
   //   `(\\s|\\n)*${field}(\\s|\\n)*\\{[^{}]*\\}`,
   //   'g'
   // );
-
-  console.log(regexPattern);
-  const match = query.match(regexPattern);
-  console.log(match);
+  // console.log(regexPattern);
+  const match = query.match(regex);
   if (match) {
     //get the content inside {}
     const extractedField = match[0];
     let newQuery = '';
-    console.log(extractedField);
+    // console.log(extractedField);
     const regexExtract = new RegExp(`\\{[(\\s|\\n)*${field}[ ]*\\}`);
     const regexExtract1 = new RegExp(`\\{\\s*${field}\\s*\\}`);
     console.log(regexExtract1.test(extractedField));
     if (regexExtract.test(extractedField)) {
       newQuery = query.replace(extractedField, '');
-      console.log(newQuery);
+      // console.log(newQuery);
       return newQuery;
     }
 
@@ -86,9 +127,12 @@ const testQuery = `
         description
         test
         wobble
-      }
-      text {
-        content
+        text {
+          content
+          test2 {
+            field
+          }
+        }
       }
     }
   }
@@ -96,8 +140,9 @@ const testQuery = `
 module.exports = queryFormatter;
 // const invalidQuery = queryFormatter(testQuery);
 
-// const testError = { links: ['test', 'wobble'], feed: ['text'] };
-// // const testError = { text: ['content'] };
+// const testError = { links: ['test', 'wobble'], text: ['test2'] };
+// // const testError = { text: ['test2'] };
+// const testError1 = { links: ['test', 'wobble'] };
 
 // const validQuery = invalidQuery(testError);
 // console.log(validQuery);
