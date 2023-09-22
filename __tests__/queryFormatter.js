@@ -1,12 +1,11 @@
 const queryFormatter = require('../package/queryFormatter.js');
 
 describe('queryFormatter tests', () => {
-
   // let testQuery;
   // let testError;
   // let outputQuery;
 
-  it('Return the input query if there aren\'t any errors', () => {
+  it("1, Return the input query if there aren't any errors", () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -26,7 +25,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(testQuery);
   });
 
-  it('Return reformatted query where invalid fields are at 1 level of depth in 1 type', () => {
+  it('2, Return reformatted query where invalid fields are at 1 level of depth in 1 type', () => {
     const testQuery = `
       query {
         feed {
@@ -53,7 +52,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where invalid fields are at 1 level of depth in multiple types', () => {
+  it('3, Return reformatted query where invalid fields are at 1 level of depth in multiple types', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -88,7 +87,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where invalid fields are at multiple levels of depth', () => {
+  it('4, Return reformatted query where invalid fields are at multiple levels of depth', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -123,7 +122,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where invalid fields are shallow compared to more deeply nested fields', () => {
+  it('5, Return reformatted query where invalid fields are shallow compared to more deeply nested fields', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -161,7 +160,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where invalid fields occur at same depth within multiple types', () => {
+  it('6, Return reformatted query where invalid fields occur at same depth within multiple types', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -199,7 +198,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where invalid fields are at multiple levels of depth stemming from different types at equivalent depth', () => {
+  it('7, Return reformatted query where invalid fields are at multiple levels of depth stemming from different types at equivalent depth', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -240,7 +239,7 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
-  it('Return reformatted query where a field appears multiple times, in one case being valid and in the other, invalid', () => {
+  it('8, Return reformatted query where a field appears multiple times, in one case being valid and in the other, invalid', () => {
     // declare our testQuery
     const testQuery = `
     query {
@@ -276,4 +275,4 @@ describe('queryFormatter tests', () => {
     // expect statements where you'll pass the error obj
     expect(test(testError)).toEqual(outputQuery);
   });
-})
+});
