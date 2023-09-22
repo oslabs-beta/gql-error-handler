@@ -30,7 +30,6 @@ function queryFormatter(query: string) {
   }
 }
 */
-//with nested query: /(\s|\n)*woobae\s*{[^{}]*}|(characters\s*{[^{}]*\s*}(\s|\n)*)/
 
 /*not nested query:
 {
@@ -42,52 +41,58 @@ function queryFormatter(query: string) {
 */
 /*const testQuery = `
   query {
-    feed {
-      links {
-        id
-        description
-        test
-        wobble
-        text {
-          content
-          test2 {
-            field
-          }
-        }
-      }
+  feed {
+    links {
+      id
+      description
+      test
+      wobble
+    }
+    text {
+      content
     }
   }
+}
 `; */
-//const testError = { links: ['test', 'wobble'], text: ['test2'] };
+//const testError = { links: ['test', 'wobble'], text: ['content'] };
 //remove(links, test, *original query*) --doesn't work
 //remove(text, test2, query) --this work
-//not nested query: /(\s|\n)*woobae\s*{[^{}]*}|(characters\s*{[^{}]*\s*}(\s|\n)*)/
 function remove(type: string, field: string, query: string) {
   let substring = '';
   //declare a pattern and find if the type pattern exist in the query
-  //regexPattern to find either 'field{}' or 'type{}'  in the query
-  //type{{}
+  /*trying to find pattern 
+      `${type} {
+        id
+        description
+        test
+        ${field}' 
+        */
   const regex = new RegExp(`${type}\\s*{[^]*?${field}(\\s|\\n)*`);
-  // const regexPattern = new RegExp(
-  //    `(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`
-  // );
+  //try to find pattern if there is curly braces after either field or type
+  const regexPattern = new RegExp(
+     `(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`
+  );
   // const regexPattern = new RegExp(
   //   `(\\s|\\n)*${field}(\\s|\\n)*\\{[^{}]*\\}`,
   //   'g'
   // );
   // console.log(regexPattern);
   const match = query.match(regex);
+  console.log(match);
   if (match) {
     //get the content inside {}
     const extractedField = match[0];
     let newQuery = '';
-    // console.log(extractedField);
+    console.log(extractedField);
+    // regex pattern:
     const regexExtract = new RegExp(`\\{[(\\s|\\n)*${field}[ ]*\\}`);
-    const regexExtract1 = new RegExp(`\\{\\s*${field}\\s*\\}`);
+    // const regexExtract1 = new RegExp(`(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`);
     // console.log(regexExtract1.test(extractedField));
+    
     if (regexExtract.test(extractedField)) {
+      console.log(extractedField);
       newQuery = query.replace(extractedField, '');
-      // console.log(newQuery);
+      console.log(newQuery);
       return newQuery;
     }
 
@@ -98,6 +103,11 @@ function remove(type: string, field: string, query: string) {
       if (!regex1.test(extractedField)) {
         const regex2 = new RegExp(`${field}\\s*`);
         newQuery = extractedField.replace(regex2, '');
+        console.log(newQuery);
+        //if there is a curly braces after the tyye
+        
+        
+        // console.log(newQuery);
       } else {
         //2nd case, there a pair of {} right after the field
         const regex = new RegExp(
@@ -107,7 +117,14 @@ function remove(type: string, field: string, query: string) {
         newQuery = extractedField.replace(regex, '');
       }
       //return the manipulated origional query
-      return query.replace(extractedField, newQuery);
+      let result = query.replace(extractedField, newQuery);
+      //if there's a empty curly bracket after the type word, delete that word
+      const regexType = new RegExp(`\\s*${type}\\s*\\{\\s*}`);
+      if(regexType.test(result)){
+          result = result.replace(regexType, '');
+        }
+      console.log(result);
+      return result;
     } else {
       console.log('no matching field found.');
       return query;
@@ -137,14 +154,29 @@ const testQuery = `
     }
   }
 `;
+const testQuery1 = `
+query {
+  feed {
+    links {
+      id
+      description
+      test
+      wobble
+    }
+    text {
+      content
+    }
+  }
+}
+`;
 module.exports = queryFormatter;
-// const invalidQuery = queryFormatter(testQuery);
+const invalidQuery = queryFormatter(testQuery1);
 
-// const testError = { links: ['test', 'wobble'], text: ['test2'] };
+const testError = { links: ['test', 'wobble'], text: ['content'] };
 // // const testError = { text: ['test2'] };
 // const testError1 = { links: ['test', 'wobble'] };
 
-// const validQuery = invalidQuery(testError);
-// console.log(validQuery);
+const validQuery = invalidQuery(testError);
+console.log(validQuery);
 
 ////////////////////////////////////////////////////////////////

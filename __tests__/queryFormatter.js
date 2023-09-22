@@ -219,7 +219,7 @@ describe('queryFormatter tests', () => {
     }
   `;
     // declare our testError in the case that there aren't any errors
-    const testError = { test: ['nested'], text: ['wobble'] };
+    const testError = { test: ['name', 'nested'], text: ['wobble'] };
     const outputQuery = `
     query {
       feed {
