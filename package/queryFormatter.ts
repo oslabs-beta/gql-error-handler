@@ -84,7 +84,7 @@ function remove(type: string, field: string, query: string) {
     // console.log(extractedField);
     const regexExtract = new RegExp(`\\{[(\\s|\\n)*${field}[ ]*\\}`);
     const regexExtract1 = new RegExp(`\\{\\s*${field}\\s*\\}`);
-    console.log(regexExtract1.test(extractedField));
+    // console.log(regexExtract1.test(extractedField));
     if (regexExtract.test(extractedField)) {
       newQuery = query.replace(extractedField, '');
       // console.log(newQuery);

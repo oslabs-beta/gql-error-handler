@@ -3,6 +3,10 @@ export type ErrorMessage = {
   [key: string]: string[];
 };
 
+export type queryObject = {
+  [key: string]: object | string[];
+};
+
 export type TypeFieldsCache = {
   [key: string]: string;
 };

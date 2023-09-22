@@ -70,10 +70,8 @@ function remove(type, field, query) {
     //   `(\\s|\\n)*${field}(\\s|\\n)*\\{[^{}]*\\}`,
     //   'g'
     // );
-    console.log(query);
     // console.log(regexPattern);
     var match = query.match(regex);
-    console.log(match);
     if (match) {
         //get the content inside {}
         var extractedField = match[0];
@@ -81,7 +79,7 @@ function remove(type, field, query) {
         // console.log(extractedField);
         var regexExtract = new RegExp("\\{[(\\s|\\n)*".concat(field, "[ ]*\\}"));
         var regexExtract1 = new RegExp("\\{\\s*".concat(field, "\\s*\\}"));
-        console.log(regexExtract1.test(extractedField));
+        // console.log(regexExtract1.test(extractedField));
         if (regexExtract.test(extractedField)) {
             newQuery = query.replace(extractedField, '');
             // console.log(newQuery);
