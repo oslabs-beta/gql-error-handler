@@ -118,11 +118,11 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { feed: ['test'] };
     const outputQuery = `
-    query {
-      feed {
-        id
+      query {
+        feed {
+          id
         }
-    }
+      }
     `;
     const test = queryFormatter(testQuery);
     expect(test(testError)).toEqual(outputQuery);
@@ -140,9 +140,9 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { feed: ['test', 'TIFFAAAANNNNYYYYYYYYYY'] };
     const outputQuery = `
-    query {
-      feed {
-        id
+      query {
+        feed {
+          id
         }
       }
     `;
@@ -163,11 +163,11 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { query: ['fed'] };
     const outputQuery = `
-    query {
-      links {
-        id
+      query {
+        links {
+          id
+        }
       }
-    }
     `;
     const test = queryFormatter(testQuery);
     expect(test(testError)).toEqual(outputQuery);
@@ -191,14 +191,14 @@ describe('queryFormatter tests', () => {
       links: ['test']
     };
     const outputQuery = `
-    query {
-      feed {
-        id
+      query {
+        feed {
+          id
         }
-      links {
-        id
+        links {
+          id
         }
-    }
+      }
     `;
     const test = queryFormatter(testQuery);
     expect(test(testError)).toEqual(outputQuery);
@@ -486,7 +486,7 @@ describe('queryFormatter tests', () => {
       links: ['test', 'TIFFAAAANNNNYYYYYYYYYY'],
       text: ['content']
     };
-    const queryOutput = `
+    const outputQuery = `
     query {
       feed {
         links {
@@ -497,7 +497,7 @@ describe('queryFormatter tests', () => {
     }
   `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(queryOutput);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('5.5 - Return reformatted query where invalid fields are at 2nd & 3rd levels of depth', () => {
