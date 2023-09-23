@@ -118,14 +118,14 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { feed: ['test'] };
     const outputQuery = `
-      query {
-        feed {
-          id
+    query {
+      feed {
+        id
         }
-      }
+    }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.2 - Return reformatted query where invalid fields are at 1 level of depth in 1 type', () => {
@@ -140,14 +140,14 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { feed: ['test', 'TIFFAAAANNNNYYYYYYYYYY'] };
     const outputQuery = `
-      query {
-        feed {
-          id
+    query {
+      feed {
+        id
         }
       }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.3 - Return reformatted query where invalid type on query', () => {
@@ -163,14 +163,14 @@ describe('queryFormatter tests', () => {
   `;
     const testError = { query: ['fed'] };
     const outputQuery = `
-      query {
-        links {
-          id
-        }
+    query {
+      links {
+        id
       }
+    }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.4 - Return reformatted query where invalid fields are at 1 level of depth in 2 types', () => {
@@ -191,17 +191,17 @@ describe('queryFormatter tests', () => {
       links: ['test']
     };
     const outputQuery = `
-      query {
-        feed {
-          id
+    query {
+      feed {
+        id
         }
-        links {
-          id
+      links {
+        id
         }
-      }
+    }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
 

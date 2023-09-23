@@ -6,54 +6,39 @@ function queryFormatter(query) {
         var resultQuery = query;
         for (var keys in error) {
             //Link, find key in query, and remove the key values
-            //const testError = { Link: ['test', 'wobble'], Feed: ['text'] };
+            //const testError = { links: ['test'] };
             // error = { characters: [ 'woobae' ] }
             for (var i = 0; i < error[keys].length; i++) {
+                /*check if this iteration function call result is the same as last time,
+                if so, it means we have an empty curly bracket makes the whole manipulated qurey invalid
+                that case, we want to return the origional query, and use the origional graphQL validation error message
+                */
+                if (remove(keys, error[keys][i], resultQuery) === resultQuery) {
+                    return query;
+                }
+                console.log(keys);
+                console.log(error[keys][i]);
                 resultQuery = remove(keys, error[keys][i], resultQuery);
+                // console.log(resultQuery);
             }
         }
         // if(resultQuery === query) return console.error('Query reformating failed.')
         return resultQuery;
     };
 }
-/*nested query: {
-  characters {
-    name
-    woobae
-    films{
-      title
-    }
-  }
-}
-*/
-/*not nested query:
-{
-  characters {
-    name
-    woobae
-  }
-}
-*/
-/*const testQuery = `
-  query {
-  feed {
-    links {
-      id
-      description
-      test
-      wobble
-    }
-    text {
-      content
-    }
-  }
-}
-`; */
 //const testError = { links: ['test', 'wobble'], text: ['content'] };
 //remove(links, test, *original query*) --doesn't work
 //remove(text, test2, query) --this work
 function remove(type, field, query) {
-    var substring = '';
+    // let substring = '';
+    //first we are going to identify if the type is equals to query or mutation, if so, we are going to remove the entire curly braces patter and field
+    if (type === 'query' || type === 'mutation') {
+        var regexField = new RegExp("(\\s|\\n)*".concat(field, "(\\s|\\n)*\\{[^{}]*\\}"));
+        if (regexField.test(query)) {
+            query = query.replace(regexField, '');
+            console.log(query);
+        }
+    }
     //declare a pattern and find if the type pattern exist in the query
     /*trying to find pattern
         `${type} {
@@ -64,12 +49,9 @@ function remove(type, field, query) {
           */
     var regex = new RegExp("".concat(type, "\\s*{[^]*?").concat(field, "(\\s|\\n)*"));
     //try to find pattern if there is curly braces after either field or type
-    var regexPattern = new RegExp("(\\s|\\n)*".concat(field, "\\s*{[^{}]*}|(").concat(type, "\\s*{[^{}]*\\s*}(\\s|\\n)*)"));
     // const regexPattern = new RegExp(
-    //   `(\\s|\\n)*${field}(\\s|\\n)*\\{[^{}]*\\}`,
-    //   'g'
+    //    `(\\s|\\n)*${field}\\s*{[^{}]*}|(${type}\\s*{[^{}]*\\s*}(\\s|\\n)*)`
     // );
-    // console.log(regexPattern);
     var match = query.match(regex);
     console.log(match);
     if (match) {
@@ -105,10 +87,18 @@ function remove(type, field, query) {
             }
             //return the manipulated origional query
             var result = query.replace(extractedField, newQuery);
+            console.log(result);
             //if there's a empty curly bracket after the type word, delete that word
-            var regexType = new RegExp("".concat(type, "\\s*\\{\\s*}"));
+            var regexType = new RegExp("\\s*".concat(type, "\\s*\\{\\s*}"));
             if (regexType.test(result)) {
+                console.log(type);
                 result = result.replace(regexType, '');
+            }
+            console.log(result);
+            //if regex pattern detect there's empty curly bracket in the result query string, return the origional query
+            var regexEmpty = new RegExp("\\s*\\{\\s*}");
+            if (regexEmpty.test(result)) {
+                return query;
             }
             console.log(result);
             return result;
@@ -123,14 +113,21 @@ function remove(type, field, query) {
         return query;
     }
 }
+var checkEmpty = function (query) {
+    var regexEmpty = new RegExp("/{s*}/");
+    if (regexEmpty.test(query)) {
+        return;
+    }
+};
 // TEST /////////////////////////////////////////////////////////
-var testQuery = "\n  query {\n    feed {\n      links {\n        id\n        description\n        test\n        wobble\n        text {\n          content\n          test2 {\n            field\n          }\n        }\n      }\n    }\n  }\n";
-var testQuery1 = "\nquery {\n  feed {\n    links {\n      id\n      description\n      test\n      wobble\n    }\n    text {\n      content\n    }\n  }\n}\n";
+var testQuery = "\nquery {\n  fed {\n    id\n  }\n  links {\n    id\n  }\n}\n";
+var testQuery1 = "\nquery {\n  feed {\n    links {\n      test\n      text {\n        TIFFAAAANNNNYYYYYYYYYY\n      }\n    }\n  }\n}\n";
 module.exports = queryFormatter;
-var invalidQuery = queryFormatter(testQuery1);
-var testError = { links: ['test', 'wobble'], text: ['content'] };
+var invalidQuery = queryFormatter(testQuery);
+var testError = { query: ['fed'] };
 // // const testError = { text: ['test2'] };
-// const testError1 = { links: ['test', 'wobble'] };
+var testError1 = { links: ['test'], text: ['TIFFAAAANNNNYYYYYYYYYY'] };
 var validQuery = invalidQuery(testError);
 console.log(validQuery);
+// console.log(typeof validQuery);
 ////////////////////////////////////////////////////////////////
