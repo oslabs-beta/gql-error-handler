@@ -51,7 +51,7 @@ function compare(schema, queryObj) {
                     if (typeof object[key][i] !== 'object') {
                         if (!schema[type][key][object[key][i]]) {
                             if (object[key][i][0] !== '_') {
-                                if (errorObj[key]) {
+                                if (errorObj[key] && !errorObj[key].includes(object[key][i])) {
                                     errorObj[key].push(object[key][i]);
                                 }
                                 else {
@@ -62,6 +62,7 @@ function compare(schema, queryObj) {
                     }
                     else {
                         // this is the case if an object exists in the array
+                        console.log(object[key[i]]);
                         helper(object[key][i], type);
                     }
                 }
@@ -70,6 +71,118 @@ function compare(schema, queryObj) {
     }
     helper(queryObj.query, 'query');
     helper(queryObj.mutation, 'mutation');
+    // for (const key in errorObj) {
+    //   const newSet = new Set([...errorObj[key]]);
+    //   errorObj[key] = Array.from(newSet);
+    // }
     return errorObj;
 }
 module.exports = compare;
+var schema = {
+    query: {
+        characters: {
+            id: 'ID',
+            name: 'String',
+            height: 'String',
+            gender: 'String',
+            birthYear: 'String',
+            eyeColor: 'String',
+            skinColor: 'String',
+            hairColor: 'String',
+            mass: 'Float',
+            films: {
+                id: 'ID',
+                title: 'String',
+                director: 'String',
+                releaseDate: 'String',
+                characters: '[Object]',
+            },
+        },
+        character: {
+            id: 'ID',
+            name: 'String',
+            height: 'String',
+            gender: 'String',
+            birthYear: 'String',
+            eyeColor: 'String',
+            skinColor: 'String',
+            hairColor: 'String',
+            mass: 'Float',
+            films: {
+                id: 'ID',
+                title: 'String',
+                director: 'String',
+                releaseDate: 'String',
+                characters: '[Object]',
+            },
+        },
+        films: {
+            id: 'ID',
+            title: 'String',
+            director: 'String',
+            releaseDate: 'String',
+            characters: {
+                id: 'ID',
+                name: 'String',
+                height: 'String',
+                gender: 'String',
+                birthYear: 'String',
+                eyeColor: 'String',
+                skinColor: 'String',
+                hairColor: 'String',
+                mass: 'Float',
+                films: {
+                    id: 'ID',
+                    title: 'String',
+                    director: 'String',
+                    releaseDate: 'String',
+                    characters: '[Object]',
+                },
+            },
+        },
+        film: {
+            id: 'ID',
+            title: 'String',
+            director: 'String',
+            releaseDate: 'String',
+            characters: {
+                id: 'ID',
+                name: 'String',
+                height: 'String',
+                gender: 'String',
+                birthYear: 'String',
+                eyeColor: 'String',
+                skinColor: 'String',
+                hairColor: 'String',
+                mass: 'Float',
+                films: {
+                    id: 'ID',
+                    title: 'String',
+                    director: 'String',
+                    releaseDate: 'String',
+                    characters: '[Object]',
+                },
+            },
+        },
+    },
+    mutation: {},
+};
+var resultQueryMapper = {
+    query: {
+        characters: [
+            'jeremy',
+            'name',
+            'height',
+            'gender',
+            'birthYear',
+            'eyeColor',
+            'skinColor',
+            'hairColor',
+            'mass',
+            '__typename',
+        ],
+    },
+};
+// compare(schema, resultQueryMapper);
+// console.log(compare(schema, resultQueryMapper));
+//{characters:[jeremy]}
