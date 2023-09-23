@@ -6,7 +6,7 @@ import {
   SelectionSetNode,
   OperationDefinitionNode,
 } from 'graphql';
-import { ErrorMessage, SchemaObj, queryObject } from './types';
+import { ErrorMessage, CacheSchemaObject, queryObject } from './types';
 
 // Sample GraphQL query
 const sampleQuery = `query Root {
@@ -86,7 +86,7 @@ cacheSchema: {
 [1] }
 */
 
-function compare(schema: SchemaObj, queryObj: queryObject) {
+function compare(schema: CacheSchemaObject, queryObj: queryObject) {
   const errorObj: ErrorMessage = {};
   function helper(object: any, type: string) {
     for (const key in object) {

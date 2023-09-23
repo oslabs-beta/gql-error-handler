@@ -106,7 +106,7 @@ function remove(type, field, query) {
             //return the manipulated origional query
             var result = query.replace(extractedField, newQuery);
             //if there's a empty curly bracket after the type word, delete that word
-            var regexType = new RegExp("".concat(type, "\\s*\\{\\s*}"));
+            var regexType = new RegExp("\\s*".concat(type, "\\s*\\{\\s*}"));
             if (regexType.test(result)) {
                 result = result.replace(regexType, '');
             }

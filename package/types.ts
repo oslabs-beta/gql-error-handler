@@ -32,7 +32,7 @@ export type GraphQLResponse = {
 };
 
 export interface SchemaObj {
-  [key: string]: any;
+  [key: string]: object | string[];
 }
 
 export type RequestContextType = {
@@ -57,13 +57,13 @@ type ResponseType = {
 
 export type CacheSchemaObject = {
   [key: string]: {
-    [field: string]: string | object;
+    [field: string]: any;
   };
 };
 
 export type CustomTypesObject = {
   [key: string]: {
-    [field: string]: string;
+    [field: string]: any;
   };
 };
 
