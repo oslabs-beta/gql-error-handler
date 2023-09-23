@@ -125,7 +125,7 @@ describe('queryFormatter tests', () => {
       }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.2 - Return reformatted query where invalid fields are at 1 level of depth in 1 type', () => {
@@ -147,7 +147,7 @@ describe('queryFormatter tests', () => {
       }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.3 - Return reformatted query where invalid type on query', () => {
@@ -170,7 +170,7 @@ describe('queryFormatter tests', () => {
       }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('3.4 - Return reformatted query where invalid fields are at 1 level of depth in 2 types', () => {
@@ -201,7 +201,7 @@ describe('queryFormatter tests', () => {
       }
     `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
 
@@ -486,7 +486,7 @@ describe('queryFormatter tests', () => {
       links: ['test', 'TIFFAAAANNNNYYYYYYYYYY'],
       text: ['content']
     };
-    const queryOutput = `
+    const outputQuery = `
     query {
       feed {
         links {
@@ -497,7 +497,7 @@ describe('queryFormatter tests', () => {
     }
   `;
     const test = queryFormatter(testQuery);
-    expect(test(testError)).toEqual(queryOutput);
+    expect(test(testError)).toEqual(outputQuery);
   });
 
   it('5.5 - Return reformatted query where invalid fields are at 2nd & 3rd levels of depth', () => {
