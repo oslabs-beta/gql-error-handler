@@ -635,5 +635,47 @@ describe('queryFormatter tests', () => {
     expect(test(testError)).toEqual(outputQuery);
   });
 
+  it('5.9 - Return reformatted query when invalid field occurs at all 3 levels of depth, but at least 1 valid field should remain in each level', () => {
+    const testQuery = `
+      query {
+        feed {
+          id
+          jobs
+          links {
+            id
+            businesses
+            description
+            test {
+              id
+              name
+              nested
+            }
+          }
+        }
+      }
+    `;
+    const testError = {
+      feed: ['jobs'],
+      links: ['businesses'],
+      test: ['name', 'nested']
+    };
+    const outputQuery = `
+      query {
+        feed {
+          id
+          links {
+            id
+            description
+            test {
+              id
+            }
+          }
+        }
+      }
+    `;
+    const test = queryFormatter(testQuery);
+    expect(test(testError)).toEqual(outputQuery);
+  });
+
 });
 
