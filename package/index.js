@@ -129,15 +129,17 @@ var partialDataPlugin = {
         //   'customTypes.Film.characters.films:',
         //   customTypes.Film.characters.films
         // );
-        console.log('cacheSchema:', cacheSchema);
+        // console.log('cacheSchema:', cacheSchema);
         // console.log('typeFieldsCache:', typeFieldsCache);
         var resultQueryMapper = queryMapper(requestContext.request.query);
-        // console.log('resultQueryMapper:', resultQueryMapper);
+        console.log('**********resultQueryMapper*************:', resultQueryMapper);
+        console.log('******resultQueryMapper.query.characters:*****', resultQueryMapper.query.characters);
         var errorObj = compare(cacheSchema, resultQueryMapper);
-        // console.log('GraphQL Query before:', requestContext.request.query);
+        console.log('**********errorObj*******************: ', errorObj);
+        console.log('****GraphQL Query before*******:', requestContext.request.query);
         var queryFunc = queryFormatter(requestContext.request.query);
         requestContext.request.query = queryFunc(errorObj);
-        // console.log('GraphQL Query after:', requestContext.request.query);
+        console.log('*****GraphQL Query after*********:', requestContext.request.query);
         return {
             willSendResponse: function (requestContext) {
                 return __awaiter(this, void 0, void 0, function () {
