@@ -130,6 +130,7 @@ var partialDataPlugin = {
         //   customTypes.Film.characters.films
         // );
         // console.log('cacheSchema:', cacheSchema);
+        // console.log('cacheSchema:', cacheSchema);
         // console.log('typeFieldsCache:', typeFieldsCache);
         var resultQueryMapper = queryMapper(requestContext.request.query);
         console.log('**********resultQueryMapper*************:', resultQueryMapper);

@@ -1,4 +1,3 @@
-// logic for error handling methods to be utilized in GraphQL API
 const compare = require('./compare');
 const queryMapper = require('./queryMapper');
 const queryFormatter = require('./queryFormatter');
@@ -12,7 +11,7 @@ import type {
   TypeFieldsCacheObject,
 } from './types';
 
-// client will employ a single function specified by the package (higher order function) and within the package all of the lower level functionality will be executed through callbacks, abstracting away all of the functionality and complexity from the developer
+// plugin to be utilized in an instance of Apollo Server
 
 const partialDataPlugin = {
   requestDidStart(requestContext: RequestContextType) {
@@ -77,6 +76,8 @@ const partialDataPlugin = {
       }
     });
 
+    // helper function to apply regex and create shallow copies of custom type reference
+
     function shallowCopy(prop: string) {
       if (!scalarTypes.includes(prop)) {
         const propRegEx = prop.replace(/[^a-zA-Z]/g, '');
@@ -84,6 +85,8 @@ const partialDataPlugin = {
       }
       return prop;
     }
+
+    // helper function to nest shallow copies
 
     function nest(nestedProps: Record<string, any>) {
       for (const nestedProp in nestedProps) {
@@ -97,7 +100,8 @@ const partialDataPlugin = {
       return nestedProps;
     }
 
-    // create nested levels of custom types
+    // create nested levels of custom types to be referred to by cacheSchema for functionality regarding nested queries
+    // using shallowCopy and nest helper procedures
 
     for (const customType in customTypes) {
       for (const prop in customTypes[customType]) {
