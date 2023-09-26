@@ -1,5 +1,5 @@
 <h1 align="center" style="color: #ff347f" style="font: 'Roboto Mono'">
-  <img width="100"  src="./assets/banner.png">
+  <img  src="./assets/banner.png">
   <!-- <br>gql-error-handler</br> -->
 </h1>
 
