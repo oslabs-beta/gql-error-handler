@@ -36,12 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// logic for error handling methods to be utilized in GraphQL API
 var compare = require('./compare');
 var queryMapper = require('./queryMapper');
 var queryFormatter = require('./queryFormatter');
 var errObjectParser = require('./errObjectParser');
-// client will employ a single function specified by the package (higher order function) and within the package all of the lower level functionality will be executed through callbacks, abstracting away all of the functionality and complexity from the developer
+// plugin to be utilized in an instance of Apollo Server
 var partialDataPlugin = {
     requestDidStart: function (requestContext) {
         var cacheSchema = {
@@ -95,6 +94,7 @@ var partialDataPlugin = {
                 });
             }
         });
+        // helper function to apply regex and create shallow copies of custom type reference
         function shallowCopy(prop) {
             if (!scalarTypes.includes(prop)) {
                 var propRegEx = prop.replace(/[^a-zA-Z]/g, '');
@@ -102,6 +102,7 @@ var partialDataPlugin = {
             }
             return prop;
         }
+        // helper function to nest shallow copies
         function nest(nestedProps) {
             for (var nestedProp in nestedProps) {
                 if (typeof nestedProps[nestedProp] === 'string' &&
@@ -111,7 +112,8 @@ var partialDataPlugin = {
             }
             return nestedProps;
         }
-        // create nested levels of custom types
+        // create nested levels of custom types to be referred to by cacheSchema for functionality regarding nested queries
+        // using shallowCopy and nest helper procedures
         for (var customType in customTypes) {
             for (var prop in customTypes[customType]) {
                 customTypes[customType][prop] = shallowCopy(customTypes[customType][prop]);
@@ -129,7 +131,6 @@ var partialDataPlugin = {
         //   'customTypes.Film.characters.films:',
         //   customTypes.Film.characters.films
         // );
-        // console.log('cacheSchema:', cacheSchema);
         // console.log('cacheSchema:', cacheSchema);
         // console.log('typeFieldsCache:', typeFieldsCache);
         var resultQueryMapper = queryMapper(requestContext.request.query);
