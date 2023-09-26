@@ -39,17 +39,17 @@ npm i gql-error-handler
 ## Future Considerations
 
 - Extend handling of nested queries beyond three levels of depth
-- Develop GUI to show logs of previous queries and server response - Link to other repo?????
+- Develop [GUI](https://github.com/gql-error-handler/gql-UI) to show logs of previous queries and server response
 - Add authentication and other security measures
 - Handle other types of errors in GraphQL
 
 ## Contributors
 
-- Jeremy Buron-Yi | [LinkedIn] | [GitHub](https://github.com/JEF-BY)
-- "Scooby" Wooby "Doo" Kim | [LinkedIn] | [GitHub](https://github.com/woobaekim)
+- Jeremy Buron-Yi | [LinkedIn](https://www.linkedin.com/in/jeremy-buronyi/) | [GitHub](https://github.com/JEF-BY)
+- Woobae Kim | [LinkedIn] | [GitHub](https://github.com/woobaekim)
 - Samuel Ryder | [LinkedIn] | [GitHub](https://github.com/samryderE)
-- Tiffany Wong | [LinkedIn] | [GitHub](https://github.com/twong-cs)
-- Nancy Yang | [LinkedIn] | [GitHub](https://github.com/nancyynx88)
+- Tiffany Wong | [LinkedIn](https://www.linkedin.com/in/tiffanywong149/) | [GitHub](https://github.com/twong-cs)
+- Nancy Yang | [LinkedIn](www.linkedin.com/in/naixinyang) | [GitHub](https://github.com/nancyynx88)
 
 ## License
 
