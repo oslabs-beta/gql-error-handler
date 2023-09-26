@@ -139,6 +139,8 @@ console.log('******resultQueryMapper.query.characters:*****', resultQueryMapper.
       async willSendResponse(requestContext: RequestContextType) {
         const { response } = requestContext;
         if (!response || !response.errors) {
+          // add custom error message if invalid fields were present in original query
+
           const errArray = errObjectParser(errorObj, typeFieldsCache);
           if (errArray.length > 0) response.errors = errArray;
         }

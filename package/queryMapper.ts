@@ -6,8 +6,10 @@ import {
   FieldNode,
 } from 'graphql';
 
+
 // Parse the client's query and traverse the AST object
 // Construct a query object queryMap, using the same structure as the cacheSchema for comparison
+
 function queryMapper(query: string) {
   
   const ast: DocumentNode = parse(query);
