@@ -55,7 +55,9 @@ function queryMapper(query: string) {
 
             Object.values(types).forEach((type: any) => {
               if (!queryMap[operationType][type.name.value] && node.selectionSet) {
-                queryMap[operationType][node.name.value] = buildFieldArray(node);
+                if (Object.values(types).includes(node)) {
+                  queryMap[operationType][node.name.value] = buildFieldArray(node);
+                }
               }
             })
           },
@@ -126,5 +128,25 @@ const testQuery = `
           } 
         }
       `;
-console.log(queryMapper(testQuery3));
+  const testQuery4 = `
+      query { 
+        feed {
+          id
+          tiffany
+          links {
+              id
+              description
+              tiffany2
+              feed1 {
+                tiffany3
+              }
+          }
+        }
+        test {
+          id
+          description
+      }
+      }
+    `;
+console.log(queryMapper(testQuery4));
 module.exports = queryMapper;
