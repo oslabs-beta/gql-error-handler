@@ -7,6 +7,9 @@ import {
   ObjectTypeDefinitionNode,
 } from 'graphql';
 
+// function takes in original query as string
+// and converts it to object form where key values are an array of fields
+
 function queryMapper(query: string) {
   const ast: DocumentNode = parse(query);
 

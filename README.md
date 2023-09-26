@@ -1,128 +1,56 @@
 # gql-error-handler
 
-Certainly! Here's an example of an Abstract Syntax Tree (AST) for a simple GraphQL query:
+<h1 align="center" style="color: #ff347f" style="font: 'Roboto Mono'">
+  <img width="100"  src="./assets/logo.png">
+  <br>gql-error-handler</br>
+</h1>
 
-Query Example:
+[gql-error-handler](https://www.gql-error-handler.com) is a Javascript library that returns partial data upon validation errors.
 
-query {
-  user(id: "123") {
-    id
-    username
-  }
-}
+## Features
 
+- **partialDataPlugin:** A Javascript function that reformulates queries that would otherwise be invalidated by removing invalid fields and allows developers to use partial data returned.
+
+  - Functionality is supported for queries and mutations with multiple root levels and nested fields up to 3 levels deep, including circular dependencies
+  - Implement core functionality through utilization of a single plugin in an `ApolloServer` instance
+
+## Setup
+
+- In your server file utilizing Apollo Server, import or require in `queryAdjusterPlugin`
+- At initialization of your instance of `ApolloServer`, list `queryAdjusterPlugin` as an element in the array value of the `plugins` property
 
 ```javascript
-{
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: {
-              kind: 'Name',
-              value: 'user',
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: {
-                  kind: 'Name',
-                  value: 'id',
-                },
-                value: {
-                  kind: 'StringValue',
-                  value: '123',
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: {
-                    kind: 'Name',
-                    value: 'id',
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: {
-                    kind: 'Name',
-                    value: 'username',
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-}
+const { ApolloServer } = require('apollo-server');
+const queryAdjusterPlugin = require('gql-error-handler');
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [queryAdjusterPlugin],
+});
 ```
 
-This AST represents a GraphQL query that fetches a user's `id` and `username` based on their `id` argument. Let's break down the structure of this AST:
+## Installation
 
-- `kind: 'Document'`: This is the root of the AST, representing the entire GraphQL document.
+```javascript
+npm i gql-error-handler
+```
 
-- `definitions`: An array containing one or more GraphQL operation definitions or fragment definitions.
+## Future Considerations
 
-  - `kind: 'OperationDefinition'`: This represents an operation, which can be either a query (`'query'`), mutation (`'mutation'`), or subscription (`'subscription'`).
+- Extend handling of nested queries beyond three levels of depth
+- Develop GUI to show logs of previous queries and server response - Link to other repo?????
+- Add authentication and other security measures
+- Handle other types of errors in GraphQL
 
-    - `operation: 'query'`: In this case, it's a query operation.
+## Contributors
 
-    - `selectionSet`: This defines the selection set of fields to be queried within the operation.
+- Jeremy Buron-Yi | [LinkedIn] | [GitHub](https://github.com/JEF-BY)
+- "Scooby" Wooby "Doo" Kim | [LinkedIn] | [GitHub](https://github.com/woobaekim)
+- Samuel Ryder | [LinkedIn] | [GitHub](https://github.com/samryderE)
+- Tiffany Wong | [LinkedIn] | [GitHub](https://github.com/twong-cs)
+- Nancy Yang | [LinkedIn] | [GitHub](https://github.com/nancyynx88)
 
-      - `kind: 'SelectionSet'`: Represents a set of field selections.
+## License
 
-      - `selections`: An array of field selections to be queried.
-
-        - `kind: 'Field'`: Represents a field selection.
-
-        - `name`: Contains the name of the field being queried.
-
-          - `kind: 'Name'`: Represents a name.
-
-          - `value: 'user'`: The name of the field is "user."
-
-        - `arguments`: An array of arguments passed to the field.
-
-          - `kind: 'Argument'`: Represents an argument.
-
-          - `name`: Contains the name of the argument.
-
-            - `kind: 'Name'`: Represents a name.
-
-            - `value: 'id'`: The name of the argument is "id."
-
-          - `value`: Represents the value of the argument.
-
-            - `kind: 'StringValue'`: Represents a string value.
-
-            - `value: '123'`: The value of the argument is the string "123."
-
-        - `selectionSet`: If the field has subfields to be queried, this defines the subfield selections.
-
-          - `kind: 'SelectionSet'`: Represents a set of subfield selections.
-
-          - `selections`: An array of subfield selections.
-
-            - `kind: 'Field'`: Represents a subfield selection.
-
-            - `name`: Contains the name of the subfield.
-
-              - `kind: 'Name'`: Represents a name.
-
-              - `value: 'id'`: The name of the subfield is "id" (subfield of "user").
-
-              - `value: 'username'`: The name of the subfield is "username" (subfield of "user").
-
-This example demonstrates how a GraphQL query is structured as an AST with various nodes representing different aspects of the query. The AST is a structured representation that makes it easier to analyze and manipulate GraphQL queries programmatically.
-
+Thank you for using gql-error-handler. We hope that through the use of our plugin, your GraphQL user experience is improved. Should you encounter any issues during implementation or require further information, please reach out to us for assistance.

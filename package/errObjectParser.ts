@@ -1,17 +1,14 @@
-import { GraphQLResponse, ErrorMessage, TypeFieldsCache } from './types';
+import { ErrorMessage, TypeFieldsCacheObject } from './types';
 
-// const example = {
-//   characters: ['height'],
-//   films: ['The Phantom Menace', 'A New Hope'],
-// };
+// function takes in object containing invalid fields and object mapping custom types to their corresponding field names
+// and generates an array containing custom error message strings to be attached to returned partial data
 
 function errObjectParser(
   errorObj: ErrorMessage,
-  typeFieldsCache: TypeFieldsCache
+  typeFieldsCache: TypeFieldsCacheObject
 ): string[] {
   const errorMessArr = [];
 
-  // iterate through errorObj, check if key(s) matches key(s) in typeFieldsCache
   for (const prop in errorObj) {
     for (let i = 0; i < errorObj[prop].length; i++) {
       errorMessArr.push(
