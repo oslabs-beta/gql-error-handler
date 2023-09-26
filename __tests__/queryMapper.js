@@ -1,4 +1,4 @@
-const queryMapper = require('../package/queryMapper1.js');
+const queryMapper = require('../package/queryMapper.js');
 
 describe('queryMapper tests', () => {
   it('1.1 - Returns an object with invalid fields (1 level)', () => {
