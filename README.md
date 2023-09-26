@@ -1,8 +1,6 @@
-# gql-error-handler
-
 <h1 align="center" style="color: #ff347f" style="font: 'Roboto Mono'">
-  <img width="100"  src="./assets/logo.png">
-  <br>gql-error-handler</br>
+  <img width="100"  src="./assets/banner.png">
+  <!-- <br>gql-error-handler</br> -->
 </h1>
 
 [gql-error-handler](https://www.gql-error-handler.com) is a Javascript library that returns partial data upon validation errors.
