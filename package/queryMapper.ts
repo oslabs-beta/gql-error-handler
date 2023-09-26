@@ -21,17 +21,24 @@ function queryMapper(query: string) {
       node.selectionSet.selections.forEach((selection) => {
         if (selection.kind === 'Field') {
           if (selection.selectionSet) {
-            fieldArray.push({
-              [selection.name.value]: buildFieldArray(selection),
-            });
+            const fieldEntry = { [selection.name.value]: []};
+            fieldEntry[selection.name.value] = buildFieldArray(selection);
+            console.log(fieldEntry[selection.name.value]);
+            fieldArray.push(
+              fieldEntry
+            );
+          // console.log('line28,', selection.name.value);
           } else {
+            // console.log(fieldArray);
+            // console.log(selection.name.value)
             fieldArray.push(...buildFieldArray(selection));
           }
         }
       });
     }
-
+    
     let temp = fieldArray.length > 0 ? fieldArray : [node.name.value];
+    console.log(temp);
     return temp;
   };
 
@@ -41,21 +48,105 @@ function queryMapper(query: string) {
         operationType = node.operation;
         queryMap[operationType] = {};
 
+        const types = node.selectionSet.selections;
+  
         const fieldVisitor = {
           Field(node: FieldNode) {
-            if (node.selectionSet) {
-              queryMap[operationType][node.name.value] = buildFieldArray(node);
-            }
+
+            Object.values(types).forEach((type: any) => {
+              if (!queryMap[operationType][type.name.value] && node.selectionSet) {
+                if (Object.values(types).includes(node)) {
+                  queryMap[operationType][node.name.value] = buildFieldArray(node);
+                }
+              }
+            })
           },
         };
-
+  
         visit(node, fieldVisitor);
       },
     },
   };
-
+  
   visit(ast, visitor);
 
   return queryMap;
 }
+
+const testQuery = `
+        query {
+          feed {
+            id
+            tiffany
+            links {
+                id
+                description
+                tiffany2
+                feed {
+                    name
+                    tiffany3
+                }
+            } 
+          }
+        }
+      `;
+      const testQuery1 = `
+      query {
+        feed {
+          id
+          tiffany
+          links {
+              id
+              description
+              tiffany2
+          }
+        } 
+      }
+    `;
+    const testQuery2 = `
+    query {
+      links {
+        test
+        woobae
+      } 
+      feed {
+        id
+        tiffany
+        links {
+            id
+            description
+            tiffany2
+        }
+      }
+    }
+  `;
+  const testQuery3 = `
+        query {
+          feed {
+            id
+            tiffany
+          } 
+        }
+      `;
+  const testQuery4 = `
+      query { 
+        feed {
+          id
+          tiffany
+          links {
+              id
+              description
+              tiffany2
+              feed1 {
+                tiffany3
+              }
+          }
+        }
+        test {
+          id
+          description
+      }
+      }
+    `;
+console.log(queryMapper(testQuery4));
 module.exports = queryMapper;
