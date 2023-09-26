@@ -113,16 +113,27 @@ const partialDataPlugin = {
         }
       }
     }
-
-    // generate object from original query string
+    // console.log('customTypes:', customTypes);
+    // console.log(
+    //   'customTypes.Character.films.characters:',
+    //   customTypes.Character.films.characters
+    // );
+    // console.log(
+    //   'customTypes.Film.characters.films:',
+    //   customTypes.Film.characters.films
+    // );
+    // console.log('cacheSchema:', cacheSchema);
+    // console.log('typeFieldsCache:', typeFieldsCache);
 
     const resultQueryMapper = queryMapper(requestContext.request.query);
-
-    // query reformulation processes
-
+    console.log('**********resultQueryMapper*************:', resultQueryMapper);
+console.log('******resultQueryMapper.query.characters:*****', resultQueryMapper.query.characters);
     const errorObj = compare(cacheSchema, resultQueryMapper);
+    console.log('**********errorObj*******************: ', errorObj);
+    console.log('****GraphQL Query before*******:', requestContext.request.query);
     const queryFunc = queryFormatter(requestContext.request.query);
     requestContext.request.query = queryFunc(errorObj);
+    console.log('*****GraphQL Query after*********:', requestContext.request.query);
 
     return {
       async willSendResponse(requestContext: RequestContextType) {
