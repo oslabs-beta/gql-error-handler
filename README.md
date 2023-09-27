@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/banner.png">
+  <img src="https://github.com/oslabs-beta/gql-error-handler/blob/main/assets/banner.png?raw=true">
 
 ---
 
@@ -17,13 +17,13 @@
 Before using our plugin, no data is returned due to validation errors:
 
 <div>
-  <img src="./assets/before.gif">
+  <img src="https://github.com/oslabs-beta/gql-error-handler/blob/main/assets/before.gif?raw=true">
 </div>
 
 After using our plugin, partial data is returned for all valid fields and a custom error message is added indicating which fields were problematic:
 
 <div>
-  <img src="./assets/after.gif">
+  <img src="https://github.com/oslabs-beta/gql-error-handler/blob/main/assets/after.gif?raw=true">
 </div>
 
 ## Setup
