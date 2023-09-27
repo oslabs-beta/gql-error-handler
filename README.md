@@ -5,7 +5,7 @@
 
 </div>
 
-[gql-error-handler](https://www.gql-error-handler.com) is a Javascript library that returns partial data upon validation errors.
+[gql-error-handler](https://www.gql-error-handler.com) is a Javascript plugin that returns partial data upon validation errors.
 
 ## Features
 
