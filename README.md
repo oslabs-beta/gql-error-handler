@@ -16,8 +16,8 @@
 
 ## Setup
 
-- In your server file utilizing Apollo Server, import or require in `queryAdjusterPlugin`
-- At initialization of your instance of `ApolloServer`, list `queryAdjusterPlugin` as an element in the array value of the `plugins` property
+- In your server file utilizing Apollo Server, import or require in `partialDataPlugin`
+- At initialization of your instance of `ApolloServer`, list `partialDataPlugin` as an element in the array value of the `plugins` property
 
 ```javascript
 const { ApolloServer } = require('apollo-server');
@@ -26,7 +26,7 @@ const queryAdjusterPlugin = require('gql-error-handler');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [queryAdjusterPlugin],
+  plugins: [partialDataPlugin],
 });
 ```
 
