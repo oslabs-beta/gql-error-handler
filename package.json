@@ -1,6 +1,6 @@
 {
   "name": "gql-error-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "gql-error-handler is a Javascript plugin that returns partial data upon validation errors.",
   "main": "index.js",
   "scripts": {
