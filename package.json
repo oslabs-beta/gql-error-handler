@@ -1,0 +1,21 @@
+{
+  "name": "gql-error-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.8.3",
+    "@apollo/server": "^4.9.3",
+    "graphql": "^16.8.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
