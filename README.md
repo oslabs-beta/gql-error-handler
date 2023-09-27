@@ -17,7 +17,7 @@
 Before using our plugin, no data is returned due to validation errors:
 
 <div>
-  <img src="https://i.imgur.com/qbEVQJ3.gif">
+  <img src="https://i.imgur.com/nDnmBnZ.gif">
 </div>
 
 After using our plugin, partial data is returned for all valid fields and a custom error message is added indicating which fields were problematic:
