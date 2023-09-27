@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/banner.png">
+  <img src="https://i.imgur.com/iNdlLe1.png">
 
 ---
 
@@ -17,13 +17,13 @@
 Before using our plugin, no data is returned due to validation errors:
 
 <div>
-  <img src="./assets/before.gif">
+  <img src="https://i.imgur.com/qbEVQJ3.gif">
 </div>
 
 After using our plugin, partial data is returned for all valid fields and a custom error message is added indicating which fields were problematic:
 
 <div>
-  <img src="./assets/after.gif">
+  <img src="https://i.imgur.com/a2zVNVU.gif">
 </div>
 
 ## Setup
