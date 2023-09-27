@@ -113,34 +113,19 @@ const partialDataPlugin = {
         }
       }
     }
-    // console.log('customTypes:', customTypes);
-    // console.log(
-    //   'customTypes.Character.films.characters:',
-    //   customTypes.Character.films.characters
-    // );
-    // console.log(
-    //   'customTypes.Film.characters.films:',
-    //   customTypes.Film.characters.films
-    // );
-    // console.log('cacheSchema:', cacheSchema);
-    // console.log('typeFieldsCache:', typeFieldsCache);
 
     const resultQueryMapper = queryMapper(requestContext.request.query);
-    console.log('**********resultQueryMapper*************:', resultQueryMapper);
-console.log('******resultQueryMapper.query.characters:*****', resultQueryMapper.query.characters);
     const errorObj = compare(cacheSchema, resultQueryMapper);
-    console.log('**********errorObj*******************: ', errorObj);
-    console.log('****GraphQL Query before*******:', requestContext.request.query);
     const queryFunc = queryFormatter(requestContext.request.query);
     requestContext.request.query = queryFunc(errorObj);
-    console.log('*****GraphQL Query after*********:', requestContext.request.query);
 
     return {
       async willSendResponse(requestContext: RequestContextType) {
         const { response } = requestContext;
-        if (!response || !response.errors) {
-          // add custom error message if invalid fields were present in original query
 
+        // add custom error message if invalid fields were present in original query
+
+        if (!response || !response.errors) {
           const errArray = errObjectParser(errorObj, typeFieldsCache);
           if (errArray.length > 0) response.errors = errArray;
         }
