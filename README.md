@@ -33,7 +33,7 @@ After using our plugin, partial data is returned for all valid fields and a cust
 
 ```javascript
 const { ApolloServer } = require('apollo-server');
-const queryAdjusterPlugin = require('gql-error-handler');
+const partialDataPlugin = require('gql-error-handler');
 
 const server = new ApolloServer({
   typeDefs,
