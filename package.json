@@ -1,13 +1,15 @@
 {
   "name": "gql-error-handler",
   "version": "1.0.0",
-  "description": "",
+  "description": "gql-error-handler is a Javascript plugin that returns partial data upon validation errors.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["JavaScript", "Typescript", "GraphQL", "Apollo Client", "Apollo Server", "Partial Data",
+    "GraphQL Errors", "Error Handling", "Validation Errors", "Circular Dependencies", "Plugin", "Open Source",
+    "npm package"],
+  "author": "Nancy Yang | Tiffany Wong | Sam Ryder | Woobae Kim | Jeremy Buron-Yi",
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.8.3",
