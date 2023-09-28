@@ -61,7 +61,7 @@ npm i gql-error-handler
 - **Woobae Kim** | [LinkedIn](https://www.linkedin.com/in/woobaekim/) | [GitHub](https://github.com/woobaekim)
 - **Samuel Ryder** | [LinkedIn](https://www.linkedin.com/in/samuelRyder/) | [GitHub](https://github.com/samryderE)
 - **Tiffany Wong** | [LinkedIn](https://www.linkedin.com/in/tiffanywong149/) | [GitHub](https://github.com/twong-cs)
-- **Nancy Yang** | [LinkedIn](www.linkedin.com/in/naixinyang/) | [GitHub](https://github.com/nancyynx88)
+- **Nancy Yang** | [LinkedIn](https://www.linkedin.com/in/naixinyang/) | [GitHub](https://github.com/nancyynx88)
 
 ## License
 
