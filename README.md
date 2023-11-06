@@ -5,7 +5,7 @@
 
 </div>
 
-[gql-error-handler](https://www.gql-error-handler.com) is a Javascript library that returns partial data upon validation errors.
+[gql-error-handler](https://www.gql-error-handler.com) is an Apollo Server plugin that returns partial data upon validation errors in GraphQL.
 
 ## Features
 
@@ -61,10 +61,11 @@ npm i gql-error-handler
 - **Woobae Kim** | [LinkedIn](https://www.linkedin.com/in/woobaekim/) | [GitHub](https://github.com/woobaekim)
 - **Samuel Ryder** | [LinkedIn](https://www.linkedin.com/in/samuelRyder/) | [GitHub](https://github.com/samryderE)
 - **Tiffany Wong** | [LinkedIn](https://www.linkedin.com/in/tiffanywong149/) | [GitHub](https://github.com/twong-cs)
-- **Nancy Yang** | [LinkedIn](www.linkedin.com/in/naixinyang) | [GitHub](https://github.com/nancyynx88)
+- **Nancy Yang** | [LinkedIn](https://www.linkedin.com/in/naixinyang/) | [GitHub](https://github.com/nancyynx88)
 
 ## License
 
 _gql-error-handler is MIT licensed._
 
 Thank you for using gql-error-handler. We hope that through the use of our plugin, your GraphQL user experience is enhanced. Should you encounter any issues during implementation or require further information, please reach out to us for assistance.
+

@@ -1,14 +1,16 @@
 {
   "name": "gql-error-handler",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "gql-error-handler is an Apollo Server plugin that returns partial data upon validation errors in GraphQL.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["JavaScript", "Typescript", "GraphQL", "Apollo Client", "Apollo Server", "Partial Data",
+    "GraphQL Errors", "Error Handling", "Validation Errors", "Circular Dependencies", "Plugin", "Open Source",
+    "npm package"],
+  "author": "Nancy Yang | Tiffany Wong | Sam Ryder | Woobae Kim | Jeremy Buron-Yi",
+  "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.8.3",
     "@apollo/server": "^4.9.3",
