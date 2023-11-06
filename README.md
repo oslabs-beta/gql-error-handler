@@ -67,4 +67,4 @@ npm i gql-error-handler
 
 _gql-error-handler is MIT licensed._
 
-Thank you for using gql-error-handler. We hope that through the use of our plugin, your GraphQL user experience is enhanced. Should you encounter any issues during implementation or require further information, please reach out to us for assistance.
+Thank you for using gql-error-handler. We hope that through the use of our plugin, your GraphQL user experience is optimized. Should you encounter any issues during implementation or require further information, please reach out to us for assistance.
